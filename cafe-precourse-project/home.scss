@@ -1,0 +1,60 @@
+@use "config"; //Resusable config settings
+@use "classes"; //Reusable classes
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: config.$font-family;
+}
+body {
+  font-family: config.$font-family;
+  background-color: config.$primary-color;
+  color: config.$secondary-color;
+}
+//The top page holds the links
+.nav-container {
+  //Main level
+  &__main {
+    @extend .page-links__top-page;
+    @extend .borders__standard;
+    @include config.flex-basics(space-around);
+  }
+}
+// The main container holds the photos
+.main-container {
+  @include config.flex-basics(center);
+
+  &__gallery {
+    @include config.grid-model(1fr 1fr 1fr, 35px);
+
+    img {
+      @extend .borders__shadow-img;
+    }
+  }
+  //contact page form section
+  &__form {
+    @include config.grid-model(1fr 1fr, 10px);
+  }
+}
+
+.header {
+  text-align: center;
+  @include config.margins(0, 20px);
+  &__text {
+    @include config.margins(0, 10px);
+  }
+}
+
+//Footer in the contact us page
+.main-footer {
+  @include config.margins(50px, 0);
+
+  &__section {
+    text-align: center;
+    @include config.margins(0, 40px);
+  }
+
+  &__wrapper {
+    @include config.flex-basics(center);
+  }
+}

@@ -1,0 +1,22 @@
+$font-family: Arial, Helvetica, sans-serif;
+$primary-color: #93c9f2;
+$secondary-color: #884b1e;
+$hover-color: #dceefb;
+
+// Flex Config
+@mixin flex-basics($justify) {
+  display: flex;
+  justify-content: $justify;
+}
+//Grid box config
+@mixin grid-model($grid-columns, $grid-gap) {
+  display: grid;
+  grid-template-columns: $grid-columns;
+  grid-gap: $grid-gap;
+}
+
+//Not REALLY needed but for the sake of the exercise
+@mixin margins($margin-top, $margin-bottom) {
+  margin-top: $margin-top;
+  margin-bottom: $margin-bottom;
+}

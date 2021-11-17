@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="css/home.css" />
+    <title>Cute Cafe</title>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <nav class="nav-container">
+      <ul class="nav-container__main">
+        <li class="links">
+          <a href="home.html">Home</a>
+        </li>
+        <li class="links">
+          <a href="contact.html">Contact Us</a>
+        </li>
+        <li class="links">
+          <a href="book.html">Book</a>
+        </li>
+        <li class="links">
+          <a href="bookings.html">Bookings</a>
+        </li>
+      </ul>
+    </nav>
+
+    <header class="header">
+      <h1 class="header__text">Home - Cute Cafe</h1>
+      <p>Best coffee in The Century</p>
+    </header>
+
+    <main class="main-container">
+      <form
+        class="main-container__form"
+        onsubmit="return submitMessage(event);"
+      >
+        <!-- Email -->
+        <label for="email">Email: </label>
+        <input type="text" name="email" id="email" required />
+        <!-- Full name -->
+        <label for="fullName">Full Name:</label>
+        <input type="text" name="fullName" id="fullName" required />
+        <!-- Reason for comment -->
+        <label for="feedbackType">Feedback Type: </label>
+        <select name="feedbackType" id="feedbackType">
+          <option value="review">Review</option>
+          <option value="complaint">Complaint</option>
+          <option value="event">Book Event</option>
+        </select>
+        <!-- Comment -->
+        <label for="comment">Comment: </label>
+        <textarea name="comment" id="comment" rows="3" cols="30" required>
+Leave you comment here                
+            </textarea
+        >
+
+        <!-- Clear button -->
+        <button>Clear</button>
+        <!-- Submit button -->
+        <input type="submit" value="Submit" />
+      </form>
+    </main>
+
+    <footer class="main-footer">
+      <div class="main-footer__section">
+        <h3>Contact Messages</h3>
+        <button onclick="deleteMessages();">Clear Messages</button>
+      </div>
+      <div class="main-footer__wrapper">
+        <dl id="currentMessages"></dl>
+      </div>
+    </footer>
+
+    <script>
+      function deleteMessages() {
+        if (window.sessionStorage.getItem("messages")) {
+          window.sessionStorage.removeItem("messages");
+        }
+
+        renderMessages();
+      }
+
+      function submitMessage(event) {
+        event.preventDefault();
+        const email = document.getElementById("email").value;
+        const fullName = document.getElementById("fullName").value;
+        const feedbackType = document.getElementById("feedbackType").value;
+        const comment = document.getElementById("comment").value;
+
+        const messageObject = {
+          email,
+          fullName,
+          feedbackType,
+          comment,
+        };
+
+        let currentMessages = [];
+
+        if (window.sessionStorage.getItem("messages")) {
+          currentMessages = JSON.parse(
+            window.sessionStorage.getItem("messages")
+          );
+        }
+
+        currentMessages.push(messageObject);
+        window.sessionStorage.setItem(
+          "messages",
+          JSON.stringify(currentMessages)
+        );
+
+        renderMessages();
+      }
+
+      function renderMessages() {
+        let currentMessages = [];
+
+        if (window.sessionStorage.getItem("messages")) {
+          currentMessages = JSON.parse(
+            window.sessionStorage.getItem("messages")
+          );
+        }
+
+        let listItems = [];
+        for (let i = 0; i < currentMessages.length; i++) {
+          let listItem = "";
+          const currentMessage = currentMessages[i];
+          listItem += `<dt>${currentMessage.fullName} - ${currentMessage.email}</dt>`;
+          listItem += `<dd>${currentMessage.feedbackType}: ${currentMessage.comment}</dd>`;
+          listItem += `<br />`;
+          listItems.push(listItem);
+        }
+
+        let descList = document.getElementById("currentMessages");
+        descList.innerHTML = listItems.join("");
+      }
+
+      renderMessages();
+    </script>
+  </body>
+</html>
